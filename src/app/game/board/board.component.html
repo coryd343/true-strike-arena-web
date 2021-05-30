@@ -1,0 +1,5 @@
+<div id="board-container" *ngIf="board">
+  <div class="board-row" *ngFor="let row of board; let i = index">
+    <board-space *ngFor="let space of row; let j = index" [attr.id]="generateSpaceId(i,j)"></board-space>
+  </div>
+</div>

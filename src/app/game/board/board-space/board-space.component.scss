@@ -1,0 +1,47 @@
+%square-property {
+  background-size: 64px 64px;
+  height: 64px;
+  width: 64px;
+  border: 1px solid black;
+}
+
+.road {
+  @extend %square-property;
+  //background-image: url("src/assets/dirt.png");
+  background-image: url("../../../../assets/dirt.png");
+}
+
+.mountain {
+  @extend %square-property;
+  //background-image: url("src/assets/rock.png");
+  background-image: url("../../../../assets/rock.png");
+}
+
+.water {
+  @extend %square-property;
+  //background-image: url("src/assets/water.png");
+  background-image: url("../../../../assets/water.png");
+}
+
+.crow {
+  @extend %square-property;
+  background-image: url("../../../../assets/tengu.png");
+}
+
+.brute {
+  @extend %square-property;
+  //background-image: url("src/assets/goblin.png");
+  background-image: url("../../../../assets/goblin.png");
+}
+
+.shrine {
+  @extend %square-property;
+  //background-image: url("src/assets/shrine.png");
+  background-image: url("../../../../assets/shrine.png");
+}
+
+.village {
+  @extend %square-property;
+  //background-image: url("src/assets/village.png");
+  background-image: url("../../../../assets/village.png");
+}
