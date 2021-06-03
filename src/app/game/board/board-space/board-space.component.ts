@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Terrain, Occupant, Structure } from 'src/app/shared/model/enum';
+import { TerrainType, FactionType, StructureType, OccupantType } from 'src/app/shared/model/enum';
+import { OccupantModel } from 'src/app/shared/model/occupant.model';
+import { HeroModel } from 'src/app/shared/model/hero.model';
 import { Guid } from 'guid-typescript';
 
 @Component({
@@ -11,12 +13,15 @@ export class BoardSpaceComponent implements OnInit, AfterViewInit {
 
     private isLoaded = false;
     public id: string;
+    public row: number;
+    public col: number;
+    public isSelected = false;
     @ViewChild("terrain") terrainView: ElementRef;
     @ViewChild("structure") structureView: ElementRef;
     @ViewChild("occupant") occupantView: ElementRef;
-    @Input() public terrain: Terrain;
-    @Input() public structure: Structure;
-    @Input() public occupant: Occupant;
+    @Input() public terrain: TerrainType;
+    @Input() public structure: StructureType;
+    @Input() public occupants: OccupantModel[] = [];
     terrainId: string;
     structureId: string;
     occupantId: string;
@@ -34,27 +39,46 @@ export class BoardSpaceComponent implements OnInit, AfterViewInit {
         this.isLoaded = true;
     }
 
-    public setTerrain(terrain: Terrain) {
+    private genGuid(): Guid {
+        return Guid.create();
+    }
+
+    public setTerrain(terrain: TerrainType) {
         this.terrain = terrain;
         this.terrainView.nativeElement.classList.add(terrain);
     }
 
-    public setOccupant(occupant: Occupant) {
-        this.occupant = occupant;
-        this.occupantView.nativeElement.classList.add(occupant);
+    public addHero(hero: HeroModel) {
+        this.occupants.push(hero);
+        this.occupantView.nativeElement.classList.add(hero.faction);
     }
 
-    public removeOccupant() {
+    public removeOccupant(id: Guid) {
+        for (let i = 0; i < this.occupants.length; i++) {
+            if (this.occupants[i].id.equals(id)) {
+                this.occupants.splice(i, 1);
+            }
+        }
+    }
+
+    public clearOccupants() {
+        this.occupants = [];
         this.occupantView.nativeElement.className = "";
     }
 
-    public setStructure(structure: Structure) {
+    public setStructure(structure: StructureType) {
         this.structure = structure;
         this.structureView.nativeElement.classList.add(structure);
     }
 
-    private genGuid(): Guid {
-        return Guid.create();
+    public selectSpace() {
+        this.isSelected = !this.isSelected;
+        this.occupants.forEach(o => {
+            o.toggleSelected();
+        })
+        this.isSelected ?
+            this.occupantView.nativeElement.classList.add("selected")
+            : this.occupantView.nativeElement.classList.remove("selected");
     }
 
 }

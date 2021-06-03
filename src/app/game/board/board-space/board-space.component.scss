@@ -1,8 +1,9 @@
 %square-property {
   background-size: 64px 64px;
+  display: inline-block;
   height: 64px;
   width: 64px;
-  border: 1px solid black;
+  //border: 1px solid black;
 }
 
 .road {
@@ -44,4 +45,8 @@
   @extend %square-property;
   //background-image: url("src/assets/village.png");
   background-image: url("../../../../assets/village.png");
+}
+
+.selected {
+  box-shadow: 10px 10px 5px #eff567;
 }
